@@ -1,0 +1,26 @@
+<div *ngIf="_results">
+  <div class="row">
+    <div class="col-sm-10"></div>
+    <div class="col-sm-2">
+      <div class="text-right"><h6>Found: <span class="badge badge-primary">{{_results.totalItems}}</span></h6>
+      </div>
+    </div>
+  </div>
+  <div class="row book-item" *ngFor="let item of _results.items">
+    <div class="col-md-2">
+      <img src="{{ item.volumeInfo.imageLinks.thumbnail }}" alt="..." class="img-thumbnail">
+    </div>
+    <div class="col-md-10">
+      <h4 class="title">{{ item.volumeInfo.title }} <small>by {{ (item.volumeInfo.authors || []).join(', ') }}</small></h4>
+      <span class="publisher">Publisher: <small>{{item.volumeInfo.publisher}}</small></span>
+      <p class="description cut-text">{{ item.volumeInfo.description }}</p>
+      <div class="categories">
+          <span class="category-label">Categories: </span>
+          <span class="badge badge-pill badge-light" *ngFor="let category of item.volumeInfo.categories">{{ category }}</span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary btn-sm">Select</button>
+      </div>
+    </div>
+  </div>
+</div>
