@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/';
 import { filter } from 'rxjs/operators';
-import { IBooksSearchResult } from './interfaces';
+import { IBooksSearchResult, IBookSearchItem } from './interfaces';
 
 @Component({
   selector: 'app-book-search-results',
@@ -10,6 +10,8 @@ import { IBooksSearchResult } from './interfaces';
 })
 export class BookSearchResultsComponent implements OnInit {
 
+  @Output() selectBook = new EventEmitter<IBookSearchItem>();
+
   _results: IBooksSearchResult;
   _results$ = new BehaviorSubject<IBooksSearchResult>(null);
   @Input() set results(value: IBooksSearchResult) {
@@ -17,6 +19,10 @@ export class BookSearchResultsComponent implements OnInit {
   }
 
   constructor() { }
+
+  onSelectBook(book: IBookSearchItem) {
+    this.selectBook.emit(book);
+  }
 
   ngOnInit() {
     this._results$

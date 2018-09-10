@@ -9,6 +9,10 @@ export class AddBookComponent implements OnInit {
 
   constructor() { }
 
+  onSelectBook(book) {
+    console.log({book});
+  }
+
   ngOnInit() {
   }
 

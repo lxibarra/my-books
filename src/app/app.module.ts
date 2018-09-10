@@ -5,22 +5,21 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Tech debt move all components to their own module where they can be imported by both modules (server and client)
 import { appRoutes } from './routes';
 import { AppComponent } from './app.component';
-import { Page2Component } from './page2/page2.component';
-import { Page1Component } from './page1/page1.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AddBookComponent } from './pages/add-book/add-book.component';
+
+
 import { BookSearchComponent } from './components/book-search/book-search.component';
 import { GoogleBooksAPIService } from './Services/google-books-api.service';
 import { BookSearchResultsComponent } from './components/book-search/book-search-results/book-search-results.component';
+import { EscapeHTMLPipe } from './core/pipes/html.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Page2Component,
-    Page1Component,
+    EscapeHTMLPipe,
     NavBarComponent,
     AddBookComponent,
     BookSearchComponent,

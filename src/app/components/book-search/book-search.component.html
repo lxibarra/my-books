@@ -5,5 +5,8 @@
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 </div>
 <div class="search-results-box">
-  <app-book-search-results [results]="searchResults"></app-book-search-results>
+  <app-book-search-results
+      [results]="searchResults"
+      (selectBook)="onSelectBook($event)"
+      ></app-book-search-results>
 </div>

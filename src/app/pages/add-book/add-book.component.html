@@ -1,5 +1,7 @@
 <div class="row book-searchbox">
   <div class="col-sm-12">
-    <app-book-search></app-book-search>
+    <p>Implement the view for adding book details. This is the link to retreive specific volume details</p>
+    <a href="https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C">https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C</a>
+    <app-book-search (selectBook)="onSelectBook($event)"></app-book-search>
   </div>
 </div>

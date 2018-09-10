@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { isPlatformBrowser  } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { GoogleBooksAPIService } from '../../Services/google-books-api.service';
-import { IBooksSearchResult } from './book-search-results/interfaces';
+import { IBooksSearchResult, IBookSearchItem } from './book-search-results/interfaces';
 
 @Component({
   selector: 'app-book-search',
@@ -20,12 +20,17 @@ export class BookSearchComponent implements OnInit {
   searchBusy = false;
   searchResults: IBooksSearchResult = null;
 
+  @Output() selectBook = new EventEmitter<IBookSearchItem>();
   @Input() placeholder = 'Type to search for books';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private googleBooksAPI: GoogleBooksAPIService
   ) { }
+
+  onSelectBook(book) {
+    this.selectBook.emit(book);
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
