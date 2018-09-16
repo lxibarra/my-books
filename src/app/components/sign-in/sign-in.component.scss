@@ -1,0 +1,25 @@
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  li {
+    flex-grow: 1;
+    padding: 10px 0;
+    button {
+      width: 100%;
+      border: none;
+    }
+    .google {
+      background: #db3236;
+      color: #fff;
+    }
+    .facebook {
+      background: #3B5998;
+      color: #fff;
+    }
+    .twitter {
+      background: #1DA1F2;
+      color: #fff;
+    }
+  }
+}

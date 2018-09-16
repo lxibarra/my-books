@@ -1,7 +1,10 @@
 <div class="row book-searchbox">
   <div class="col-sm-12">
-    <p>Implement the view for adding book details. This is the link to retreive specific volume details</p>
-    <a href="https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C">https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C</a>
+    <!--p>Implement the view for adding book details. This is the link to retreive specific volume details</p>
+    <a href="https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C">https://www.googleapis.com/books/v1/volumes/f6-EOtY72q8C</a-->
     <app-book-search (selectBook)="onSelectBook($event)"></app-book-search>
+
+    <!-- This component should only appear after selecting a book -->
+    <app-book-reader-details></app-book-reader-details>
   </div>
 </div>
