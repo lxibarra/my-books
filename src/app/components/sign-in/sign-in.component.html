@@ -1,5 +1,37 @@
-<ul>
-  <li><button class="bt btn-primary google" (click)="login(googleProvider)">Google</button></li>
-  <li><button class="bt btn-primary facebook" (click)="login(facebookProvider)">Facebook</button></li>
-  <li><button class="bt btn-primary twitter" (click)="login(twitterProvider)">Twitter</button></li>
-</ul>
+<div *ngIf="initialLoad; else loginStatus">
+  <div class="text-center">
+    Checking status ... just a sec.
+  </div>
+</div>
+<ng-template #loginStatus>
+  <div class="text-center" *ngIf="user; else loginButtons">
+    <p>You are currently logged in as <span class="display-name" [innerHTML]="user.displayName"></span></p>
+    <p>Not <span class="display-name" [innerHTML]="user.displayName + ' ?'"></span></p>
+    <img class="thumbnail" src="{{user.photoURL}}" alt="{{user.displayName}}" />
+    <button type="button" class="btn btn-link" (click)="logOut()">SignOut</button>
+  </div>
+  <ng-template #loginButtons>
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h3>Login or Signup</h3>
+        <p>To manage book information please signup for a free account.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-sm">
+        <ul>
+          <li><button type="button" class="bt btn-primary google" (click)="login(googleProvider)">Google</button></li>
+          <li><button type="button" class="bt btn-primary facebook" (click)="login(facebookProvider)">Facebook</button></li>
+          <li><button type="button" class="bt btn-primary twitter" (click)="login(twitterProvider)">Twitter</button></li>
+        </ul>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-12">
+        <p>If you already have an account just login using any of the buttons above.</p>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>

@@ -1,3 +1,4 @@
+// May no longer be neded
 export interface IFacebookLoginSuccess {
   additionalUserInfo: {
     isNewUser: boolean;

@@ -1,4 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { isPlatformBrowser  } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { User } from 'firebase/';
 import {
     FirebaseAuthService,
     GOOGLE_PROVIDER,
@@ -13,6 +16,8 @@ import {
 })
 export class SignInComponent implements OnInit {
 
+  user: User = null;
+  initialLoad = true;
   googleProvider = GOOGLE_PROVIDER;
   facebookProvider = FACEBOOK_PROVIDER;
   twitterProvider = TWITTER_PROVIDER;
@@ -20,7 +25,9 @@ export class SignInComponent implements OnInit {
   @Output() loginSuccess = new EventEmitter<any>();
   @Output() loginError = new EventEmitter<any>();
 
-  constructor(private oAuth: FirebaseAuthService) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private oAuth: FirebaseAuthService) { }
 
   handleSuccess(service, response) {
     console.log('Handle Success');
@@ -28,6 +35,14 @@ export class SignInComponent implements OnInit {
 
   handleError(service, error) {
     console.log('Handle Error');
+  }
+
+  logOut() {
+    this.oAuth.fireBaseLogOut().then(() => {
+      console.log('succesfully log out');
+    }).catch(error => {
+      console.log('Unable to log out');
+    });
   }
 
   login(service) {
@@ -42,7 +57,12 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
-
+      if (isPlatformBrowser(this.platformId)) {
+        this.oAuth.fireBaseAuthStatus().subscribe(user => {
+            this.initialLoad = false;
+            this.user = user;
+        });
+      }
   }
 
 }

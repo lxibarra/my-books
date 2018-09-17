@@ -1,3 +1,4 @@
+// may no longer be needed
 export interface IGoogleLoginSuccess  {
     additionalUserInfo: {
       isNewUser: boolean;

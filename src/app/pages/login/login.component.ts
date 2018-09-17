@@ -10,11 +10,12 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   loginSuccess(response) {
-    // manage state and set the app as auth.
+    // redirect to home page or whatever
+
   }
 
   loginError(error) {
-    // manage state and set the app as non auth
+    // show error
   }
 
   ngOnInit() {
