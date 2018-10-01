@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/Database';
 
 import { environment  } from '../environments/environment';
 import { appRoutes } from './routes';
@@ -16,6 +17,7 @@ import { AddBookComponent } from './pages/add-book/add-book.component';
 import { BookSearchComponent } from './components/book-search/book-search.component';
 import { GoogleBooksAPIService } from './Services/google-books-api.service';
 import { FirebaseAuthService } from './Services/firebaseAuth/firebase-auth.service';
+import { DatabaseService } from './Services/firebaseDB/database.service';
 import { BookSearchResultsComponent } from './components/book-search/book-search-results/book-search-results.component';
 import { EscapeHTMLPipe } from './core/pipes/html.pipe';
 import { BookReaderDetailsComponent } from './components/book-reader-details/book-reader-details.component';
@@ -41,11 +43,13 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     GoogleBooksAPIService,
-    FirebaseAuthService
+    FirebaseAuthService,
+    DatabaseService
   ],
   bootstrap: [AppComponent]
 })

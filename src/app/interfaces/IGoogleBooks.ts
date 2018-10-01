@@ -7,6 +7,7 @@ export interface IBooksSearchResult {
 export interface IBookSearchItem {
   accessInfo: any;
   etag: string;
+  id: string;
   kind: string;
   saleInfo: {
     country: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/';
 import { filter } from 'rxjs/operators';
-import { IBooksSearchResult, IBookSearchItem } from './interfaces';
+import { IBooksSearchResult, IBookSearchItem } from '../../../interfaces/IGoogleBooks';
 
 @Component({
   selector: 'app-book-search-results',

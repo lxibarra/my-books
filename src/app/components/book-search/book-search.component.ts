@@ -4,7 +4,7 @@ import { PLATFORM_ID, Inject } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { GoogleBooksAPIService } from '../../Services/google-books-api.service';
-import { IBooksSearchResult, IBookSearchItem } from './book-search-results/interfaces';
+import { IBooksSearchResult, IBookSearchItem } from '../../interfaces/IGoogleBooks';
 
 @Component({
   selector: 'app-book-search',
