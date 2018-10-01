@@ -18,6 +18,7 @@ import { BookSearchComponent } from './components/book-search/book-search.compon
 import { GoogleBooksAPIService } from './Services/google-books-api.service';
 import { FirebaseAuthService } from './Services/firebaseAuth/firebase-auth.service';
 import { DatabaseService } from './Services/firebaseDB/database.service';
+import { AuthGuardService } from './Services/auth-guard.service';
 import { BookSearchResultsComponent } from './components/book-search/book-search-results/book-search-results.component';
 import { EscapeHTMLPipe } from './core/pipes/html.pipe';
 import { BookReaderDetailsComponent } from './components/book-reader-details/book-reader-details.component';
@@ -49,7 +50,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
   providers: [
     GoogleBooksAPIService,
     FirebaseAuthService,
-    DatabaseService
+    DatabaseService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

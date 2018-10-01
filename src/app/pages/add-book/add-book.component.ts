@@ -20,16 +20,8 @@ export class AddBookComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*
-    // this will be here just for the cases where we need user data in the page
-    this.oAuth.fireBaseAuthStatus().subscribe(fireBaseUser => {
-      // move this logic to another class and extend it so you can redirect the user if its not
-      // logged in.
-        if (!fireBaseUser) {
-          this.router.navigate(['/login']);
-        }
-    });
-    */
+    // implemente route guard following this tutorial
+   // https://angularfirebase.com/lessons/router-guards-to-redirect-unauthorized-firebase-users/
   }
 
 }
