@@ -11,7 +11,6 @@ export class AddBookComponent implements OnInit {
   constructor(private dbService: DatabaseService) { }
 
   onSelectBook(book) {
-    // make sure the same book is not added twice
     this.dbService.AddBook(book).then(result => {
       console.log('success', result);
     }).catch(error => {
@@ -20,8 +19,7 @@ export class AddBookComponent implements OnInit {
   }
 
   ngOnInit() {
-    // implemente route guard following this tutorial
-   // https://angularfirebase.com/lessons/router-guards-to-redirect-unauthorized-firebase-users/
+
   }
 
 }

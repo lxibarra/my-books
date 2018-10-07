@@ -24,6 +24,7 @@ import { EscapeHTMLPipe } from './core/pipes/html.pipe';
 import { BookReaderDetailsComponent } from './components/book-reader-details/book-reader-details.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { MyBooksCollectionComponent } from './pages/my-books-collection/my-books-collection.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     BookSearchResultsComponent,
     BookReaderDetailsComponent,
     LoginComponent,
-    SignInComponent
+    SignInComponent,
+    MyBooksCollectionComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

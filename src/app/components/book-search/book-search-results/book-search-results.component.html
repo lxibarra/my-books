@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-10"></div>
     <div class="col-sm-2">
-      <div class="text-right"><h6>Found: <span class="badge badge-primary">{{_results.totalItems}}</span></h6>
+      <div class="text-right"><h6>{{ _totalLabel$ | async }} <span class="badge badge-primary">{{_results.totalItems}}</span></h6>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
           <span class="badge badge-pill badge-light" *ngFor="let category of item.volumeInfo.categories">{{ category }}</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm" (click)="onSelectBook(item)">Add to my read list</button>
+        <button class="btn btn-primary btn-sm" (click)="onSelectBook(item)" [innerHTML]="_actionLabel$ | async">Add to my read list</button>
       </div>
     </div>
   </div>

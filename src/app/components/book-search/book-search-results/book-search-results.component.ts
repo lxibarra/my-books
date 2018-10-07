@@ -18,6 +18,16 @@ export class BookSearchResultsComponent implements OnInit {
     this._results$.next(value);
   }
 
+  _actionLabel$ = new BehaviorSubject<string>('');
+  @Input() set actionLabel(value: string) {
+    this._actionLabel$.next(value);
+  }
+
+  _totalLabel$ = new BehaviorSubject<string>('');
+  @Input() set totalLabel(value: string) {
+    this._totalLabel$.next(value);
+  }
+
   constructor() { }
 
   onSelectBook(book: IBookSearchItem) {

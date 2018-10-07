@@ -27,5 +27,4 @@ export class FirebaseAuthService {
   public fireBaseLogOut() {
     return auth().signOut();
   }
-
 }

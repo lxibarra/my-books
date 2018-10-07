@@ -11,6 +11,9 @@ export class DatabaseService {
 
   constructor(private oAuth: FirebaseAuthService, private firebase: AngularFireDatabase) { }
 
+  // for now we are going to store some minimal user book information to reduce the scope of the project.
+  // there is no way to retreive multiple book information by id unless you create a google bookshelf or
+  // use something like graphql to avoid making multiple calls.
   public AddBook(book: IBookSearchItem) {
      return new Promise((resolve, reject) => {
        this.oAuth.fireBaseAuthStatus()
@@ -20,8 +23,11 @@ export class DatabaseService {
                              const db = this.firebase.database.ref(`${userInfo.uid}/books`);
                              return db.push(
                                {
-                                 id: book.id,
-                                 dateAdded: new Date().toISOString()
+                                 bookId: book.id,
+                                 bookDetail: book,
+                                 userData: {
+                                   dateAdded: new Date().toISOString()
+                                 }
                                }
                              )
                              .then(resolve);
@@ -37,12 +43,30 @@ export class DatabaseService {
 
   private findBookInUser(userId: string, book: IBookSearchItem) {
     return new Promise((resolve, reject) => {
-      const db = this.firebase.database.ref(`${userId}/books`);
-      const value = db.orderByChild('id').equalTo(book.id).once('value', (data) =>  {
-        return resolve(data.val());
-      });
+      const db = this.firebase.database.ref(`${userId}/books`)
+                .orderByChild('bookId')
+                .equalTo(book.id)
+                .once('value')
+                .then(snapShot => {
+                    resolve(snapShot.val());
+                }).catch(reject);
     });
+  }
 
+  public findBooksByCurrentUser() {
+    return new Promise((resolve, reject) => {
+      this.oAuth.fireBaseAuthStatus()
+          .subscribe(userInfo => {
+            if (userInfo) {
+              const db = this.firebase.database.ref(`${userInfo.uid}/books`);
+              db.orderByChild('dateAdded').on('value', (data) => {
+                return resolve(data.val());
+              });
+            } else {
+              return reject({ error: 'User is not authenticated' });
+            }
+          });
+    });
   }
 
   public findBookInCurrentUser(book: IBookSearchItem) {
