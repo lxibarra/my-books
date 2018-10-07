@@ -22,7 +22,8 @@ export class MyBooksCollectionComponent implements OnInit {
 
   ngOnInit() {
     // check if this can be rendered in the server much quicker
-    // if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
+    // after some testing the following code only executes on the client even if left like this
       this.db.findBooksByCurrentUser().then(results => {
         console.log('Success', results);
         this.results.totalItems = Object.keys(results).length;
@@ -30,7 +31,7 @@ export class MyBooksCollectionComponent implements OnInit {
       }).catch(error => {
         console.log('Error', error);
       });
-    // }
+     }
   }
 
 }
