@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/Database';
 import { FirebaseAuthService } from '../firebaseAuth/firebase-auth.service';
 import { IBookSearchItem } from '../../interfaces/IGoogleBooks';
+import { IProfile } from '../../interfaces/IProfile';
 import { pipe, Observable } from 'rxjs/';
 
 @Injectable({
@@ -53,6 +54,18 @@ export class DatabaseService {
     });
   }
 
+  public findRepeatedProfileUrl(profileUrl: string) {
+    return new Promise((resolve, reject) => {
+      const db = this.firebase.database.ref(`/`)
+           .orderByChild('profile/profileUrl')
+           .equalTo(profileUrl)
+           .once('value')
+           .then(snapShot => {
+             resolve(snapShot.val());
+           }).catch(reject);
+    });
+  }
+
   public findBooksByCurrentUser() {
     return new Promise((resolve, reject) => {
       this.oAuth.fireBaseAuthStatus()
@@ -77,6 +90,21 @@ export class DatabaseService {
                       }, error => {
                         reject(error);
                       });
+    });
+  }
+
+  public setProfile(profile: IProfile): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.oAuth.fireBaseAuthStatus()
+                .subscribe(userInfo => {
+                  const db = this.firebase.database.ref(`${userInfo.uid}/profile`);
+                  db.set({
+                    ...profile
+                  }).then(resolve)
+                    .catch(reject);
+                }, error => {
+                  reject(error);
+                });
     });
   }
 }

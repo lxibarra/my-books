@@ -25,6 +25,7 @@ import { BookReaderDetailsComponent } from './components/book-reader-details/boo
 import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MyBooksCollectionComponent } from './pages/my-books-collection/my-books-collection.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MyBooksCollectionComponent } from './pages/my-books-collection/my-books
     BookReaderDetailsComponent,
     LoginComponent,
     SignInComponent,
-    MyBooksCollectionComponent
+    MyBooksCollectionComponent,
+    ProfileComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

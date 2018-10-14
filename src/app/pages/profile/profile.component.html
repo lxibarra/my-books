@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-6">
+    <h4>Profile</h4>
+    <form #form="ngForm" (ngSubmit)="submit(form)" novalidate>
+      <div class="form-group row">
+        <label id="profileUrl" class="col-sm-4 col-form-label">Profile URL</label>
+        <div class="col-sm-8">
+          <input type="url" name="profileUrl" [(ngModel)]="model.profileUrl" required class="form-control" id="profileUrl" placeholder="Enter personal URL"  />
+          <small id="profileHelp" class="form-text text-muted">Only alphanumeric and hyphens allowed</small>
+        </div>
+      </div>
+      <button [disabled]="!form.valid" class="btn btn-primary float-md-right">Save</button>
+    </form>
+  </div>
+</div>
