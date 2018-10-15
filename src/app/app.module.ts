@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/Database';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 import { environment  } from '../environments/environment';
 import { appRoutes } from './routes';
@@ -49,7 +50,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireFunctionsModule
   ],
   providers: [
     GoogleBooksAPIService,

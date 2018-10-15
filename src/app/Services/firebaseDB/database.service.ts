@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/Database';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { FirebaseAuthService } from '../firebaseAuth/firebase-auth.service';
 import { IBookSearchItem } from '../../interfaces/IGoogleBooks';
 import { IProfile } from '../../interfaces/IProfile';
@@ -11,7 +12,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DatabaseService {
 
-  constructor(private oAuth: FirebaseAuthService, private firebase: AngularFireDatabase, private http: HttpClient) { }
+  constructor(private oAuth: FirebaseAuthService,
+             private firebase: AngularFireDatabase,
+             private functions: AngularFireFunctions,
+             private http: HttpClient) { }
 
   // for now we are going to store some minimal user book information to reduce the scope of the project.
   // there is no way to retreive multiple book information by id unless you create a google bookshelf or
@@ -95,7 +99,9 @@ export class DatabaseService {
   }
 
   public updateProfile(profile: IProfile) {
-    return this.http.post(`https://us-central1-books-bef13.cloudfunctions.net/app/checkRepeatedProfile`, profile);
+    console.log(this.functions.httpsCallable);
+    return this.functions.httpsCallable('app/checkRepeatedProfile')({ data: profile});
+    // return this.http.post(`https://us-central1-books-bef13.cloudfunctions.net/app/checkRepeatedProfile`, profile);
   }
 
   public setProfile(profile: IProfile): Promise<any> {

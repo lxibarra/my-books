@@ -1,6 +1,10 @@
 // follow this
 // https://github.com/firebase/functions-samples/blob/master/authorized-https-endpoint/functions/index.js
 
+
+// I left here the function is working just need to clean it up and also
+// save the profile if everything looks good
+
 const cors = require('cors')({origin: true});
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -51,42 +55,36 @@ app.use(cors);
 app.use(cookieParser);
 app.use(validateFireBaseIdToken)
 app.post('/checkRepeatedProfile', (request, response) => {
-  const fn = { fn: 'cors-user-info(Validation cookie!)' };
-  const profileUrl = request.body.profileUrl;
+  console.log('Went over to database update');
+  const fn = { fn: 'cors-user-info(Working!)' };
 
-  let idToken = null;
-  console.log('Cookies', request.cookies);
-  if(request.cookies) {
-    idToken = request.cookies.__session;
-  }
-  console.log('idToken', idToken);
-  admin.auth().verifyIdToken(idToken).then(decodedIdToken => {
-    console.log('ID Token correctly decoded', decodedIdToken);
-    if (profileUrl) {
+  const profileUrl = request.body.data.data.profileUrl;
+  console.log('Body', request.body);
+  response.setHeader('Content-Type', 'application/json');
+  console.log('profileUrl', profileUrl);
+  if (request.user && profileUrl) {
       admin.database().ref('/').orderByChild('profile/profileUrl')
       .equalTo(profileUrl)
       .once('value')
       .then(snapShot => {
         const value = snapShot.val();
+        console.log('Cheked db', value);
         if (value) {
+
           // send response back
-          return response.json({ validRequest:true, profileUrl: profileUrl, exists: true, fn: fn.fn });
+          return response.status(200).send(JSON.stringify({ data: { validRequest:true, profileUrl: profileUrl, exists: true, fn: fn.fn }}));
         }
         // write to db and send response back to server
-        return response.json({ validRequest:true, profileUrl: profileUrl, exists: false, fn: fn.fn });
+        return response.status(200).send(JSON.stringify({ data: { validRequest:true, profileUrl: profileUrl, exists: false, fn: fn.fn }}));
 
       }).catch(error => {
-        return response.json(error);
+        return response.status(403).send(JSON.stringify({ error: error, fn: fn.fn }));
       });
     } else {
-      return response.json({ validRequest:false, fn: fn.fn });
+      return response.status(400).send(JSON.stringify({ error:'Invalid request', fn: fn.fn }));
     }
-    return response.json({validRequest: true, fn: fn.fn});
-  })
-  .catch(error => {
-      console.error('Error while verifying Firebase ID token:', error);
-      response.status(403).send('Unauthorized');
-  });
+    // return response.send(JSON.stringify({validRequest: true, fn: fn.fn}));
+
 });
 
 exports.app = functions.https.onRequest(app);
