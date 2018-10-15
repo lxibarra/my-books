@@ -20,11 +20,16 @@ export class ProfileComponent implements OnInit {
     // make sure profileUrl its slugified
     // prevent user clicking multiple times.
 
-    this.db.findRepeatedProfileUrl(this.model.profileUrl).then(result => {
+
+    this.db.updateProfile(this.model).subscribe(response => {
+      console.log('Response', response);
+    });
+
+    /*this.db.findRepeatedProfileUrl(this.model.profileUrl).then(result => {
       console.log('Cameback success as ', result);
     }).catch(error => {
       console.log('Error', error);
-    });
+    });*/
 
     // this is working but it does not check for repeated profiles.
     /*this.db.setProfile(form.value)
