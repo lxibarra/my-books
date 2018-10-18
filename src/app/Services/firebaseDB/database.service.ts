@@ -99,9 +99,7 @@ export class DatabaseService {
   }
 
   public updateProfile(profile: IProfile) {
-    console.log(this.functions.httpsCallable);
-    return this.functions.httpsCallable('app/checkRepeatedProfile')({ data: profile});
-    // return this.http.post(`https://us-central1-books-bef13.cloudfunctions.net/app/checkRepeatedProfile`, profile);
+    return this.functions.httpsCallable('app/checkRepeatedProfile')({...profile});
   }
 
   public setProfile(profile: IProfile): Promise<any> {
