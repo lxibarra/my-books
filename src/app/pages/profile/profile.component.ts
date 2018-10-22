@@ -14,35 +14,38 @@ export class ProfileComponent implements OnInit {
     profileUrl: ''
   };
 
-  constructor(private db: DatabaseService) { }
+  formMsg = {
+    type: '',
+    msg: ''
+  };
+
+  constructor(
+    private db: DatabaseService
+  ) { }
 
   submit(form: NgForm) {
-    // make sure profileUrl its slugified
-    // prevent user clicking multiple times.
-
-
+    this.formMsg.type = '';
+    this.formMsg.msg = '';
     this.db.updateProfile(this.model).subscribe(response => {
-      console.log('Response', response);
+      if (response.updated === true) {
+        this.model = response.data;
+        this.formMsg.type = 'success';
+        this.formMsg.msg = 'Profile information updated successfully';
+      }
+      if (response.error) {
+        this.formMsg.type = 'danger';
+        this.formMsg.msg = response.error.msg;
+      }
+    }, error => {
+      this.formMsg.type = 'danger';
+      this.formMsg.msg = 'Unable to update profile information because of a server error.';
     });
-
-    /*this.db.findRepeatedProfileUrl(this.model.profileUrl).then(result => {
-      console.log('Cameback success as ', result);
-    }).catch(error => {
-      console.log('Error', error);
-    });*/
-
-    // this is working but it does not check for repeated profiles.
-    /*this.db.setProfile(form.value)
-           .then((result) => {
-             // display success to user
-           })
-           .catch(error => {
-             // display error to user.
-           });*/
-
   }
 
   ngOnInit() {
+     this.db.getUserProfile().then(response => {
+       this.model = response;
+     });
   }
 
 }

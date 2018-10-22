@@ -59,18 +59,6 @@ export class DatabaseService {
     });
   }
 
-  public findRepeatedProfileUrl(profileUrl: string) {
-    return new Promise((resolve, reject) => {
-      const db = this.firebase.database.ref(`/`)
-           .orderByChild('profile/profileUrl')
-           .equalTo(profileUrl)
-           .once('value')
-           .then(snapShot => {
-             resolve(snapShot.val());
-           }).catch(reject);
-    });
-  }
-
   public findBooksByCurrentUser() {
     return new Promise((resolve, reject) => {
       this.oAuth.fireBaseAuthStatus()
@@ -102,18 +90,13 @@ export class DatabaseService {
     return this.functions.httpsCallable('app/checkRepeatedProfile')({...profile});
   }
 
-  public setProfile(profile: IProfile): Promise<any> {
+  public getUserProfile(): Promise<IProfile> {
     return new Promise((resolve, reject) => {
       this.oAuth.fireBaseAuthStatus()
-                .subscribe(userInfo => {
-                  const db = this.firebase.database.ref(`${userInfo.uid}/profile`);
-                  db.set({
-                    ...profile
-                  }).then(resolve)
-                    .catch(reject);
-                }, error => {
-                  reject(error);
-                });
+      .subscribe(userInfo => {
+      const db = this.firebase.database.ref(`${userInfo.uid}/profile`);
+      db.on('value', snapShot => resolve(snapShot.val()));
+      }, reject);
     });
   }
 }
