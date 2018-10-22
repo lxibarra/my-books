@@ -23,6 +23,10 @@ export class ProfileComponent implements OnInit {
     private db: DatabaseService
   ) { }
 
+  dismissMsg() {
+    this.formMsg.type = '';
+  }
+
   submit(form: NgForm) {
     this.formMsg.type = '';
     this.formMsg.msg = '';
