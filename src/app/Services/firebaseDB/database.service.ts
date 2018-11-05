@@ -94,9 +94,16 @@ export class DatabaseService {
     return new Promise((resolve, reject) => {
       this.oAuth.fireBaseAuthStatus()
       .subscribe(userInfo => {
-      const db = this.firebase.database.ref(`${userInfo.uid}/profile`);
-      db.on('value', snapShot => resolve(snapShot.val()));
+        const db = this.firebase.database.ref(`${userInfo.uid}/profile`);
+        db.on('value', snapShot => {
+          const data = snapShot.val();
+          resolve(Object.assign({}, data, { identityProfileName: userInfo.displayName }));
+        });
       }, reject);
     });
+  }
+
+  public getUserPublicProfile(profileUrl: string): Observable<any> {
+    return this.functions.httpsCallable('app/get-public-profile')({ profileUrl });
   }
 }

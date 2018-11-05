@@ -2,7 +2,7 @@
 // https://github.com/firebase/functions-samples/blob/master/authorized-https-endpoint/functions/index.js
 
 const cors = require('cors')({origin: true});
-const slugify = require('slugify')
+const slugify = require('slugify');
 const functions = require('firebase-functions');
 const validateFireBaseIdToken = require('./authentication-helper');
 const admin = require('firebase-admin');
@@ -22,8 +22,38 @@ const serverReply = (code, data, response) => {
   return;
 };
 
+app.post('/get-public-profile', (request, response) => {
+  response.setHeader('Content-Type', 'application/json');
+  const profileUrl = request.body.data.profileUrl;
+  return admin.database().ref('/').orderByChild('profile/profileUrl')
+         .equalTo(profileUrl)
+         .once('value')
+         .then(snapShot => {
+           const value = snapShot.val();
+           if (value === null) {
+             return serverReply(404, { error: 'User not found' }, response);
+           }
+           const [key, ...rest] = Object.getOwnPropertyNames(value);
+           const { books, profile } = value[key];
+
+           return serverReply(200,
+             {
+               books,
+               profile: {
+                  publicFullName: profile.publicFullName
+               }
+             }, response);
+         })
+         .catch(error => {
+           console.log('Error', error);
+           return serverReply(500, error, response);
+         });
+});
+
 app.post('/checkRepeatedProfile', (request, response) => {
   const _profileUrl = request.body.data.profileUrl;
+  const { publicFullName } = request.body.data;
+  console.log('Public Full name', publicFullName);
   const profileUrl = slugify(_profileUrl, {
     replacement: '-',    // replace spaces with replacement
     remove: null,        // regex to remove characters
@@ -37,7 +67,7 @@ app.post('/checkRepeatedProfile', (request, response) => {
       .then(snapShot => {
         const value = snapShot.val();
         let isSameUser = (value || {}).hasOwnProperty(request.user.uid);
-        const data = { profileUrl };
+        const data = { profileUrl, publicFullName };
         if (isSameUser || !value) {
             return admin.database().ref(`${request.user.uid}/profile`).set(data, error => {
               if (error) {

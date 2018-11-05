@@ -11,7 +11,9 @@ import { DatabaseService } from '../../Services/firebaseDB/database.service';
 export class ProfileComponent implements OnInit {
 
   model: IProfile = {
-    profileUrl: ''
+    profileUrl: '',
+    publicFullName: '',
+    identityProfileName: ''
   };
 
   formMsg = {
@@ -28,9 +30,10 @@ export class ProfileComponent implements OnInit {
   }
 
   submit(form: NgForm) {
-    this.formMsg.type = '';
-    this.formMsg.msg = '';
-    this.db.updateProfile(this.model).subscribe(response => {
+    this.formMsg.type = 'info';
+    this.formMsg.msg = 'updating profile...';
+    const { profileUrl, publicFullName } = this.model;
+    this.db.updateProfile({ profileUrl, publicFullName }).subscribe(response => {
       if (response.updated === true) {
         this.model = response.data;
         this.formMsg.type = 'success';

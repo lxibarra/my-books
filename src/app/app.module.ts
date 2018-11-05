@@ -27,6 +27,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MyBooksCollectionComponent } from './pages/my-books-collection/my-books-collection.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { BooksCollectionComponent } from './pages/books-collection/books-collection.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     LoginComponent,
     SignInComponent,
     MyBooksCollectionComponent,
-    ProfileComponent
+    ProfileComponent,
+    BooksCollectionComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

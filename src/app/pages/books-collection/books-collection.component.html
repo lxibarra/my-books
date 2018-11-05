@@ -1,0 +1,20 @@
+<div class="row" *ngIf="init">
+  <div class="col-md-12">
+    <p>Stay put loading user data....</p>
+  </div>
+</div>
+<div *ngIf="!init">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>{{profile.publicFullName}}'s Collection</h4>
+      <p>Browse through users library
+        <small>(User may own or have read these books)</small></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-book-search-results [results]="results" totalLabel="Total: ">
+      </app-book-search-results>
+    </div>
+  </div>
+</div>
