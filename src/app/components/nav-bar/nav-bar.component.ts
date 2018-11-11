@@ -13,6 +13,10 @@ export class NavBarComponent implements OnInit {
 
   constructor(private oAuth: FirebaseAuthService) { }
 
+  logOut() {
+    this.oAuth.fireBaseLogOut();
+  }
+
   ngOnInit() {
     this.oAuth.fireBaseAuthStatus()
         .subscribe(user => {
