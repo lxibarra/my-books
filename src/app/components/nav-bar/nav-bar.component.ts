@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'firebase';
+import { FirebaseAuthService } from '../../Services/firebaseAuth/firebase-auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  user: User = null;
+
+  constructor(private oAuth: FirebaseAuthService) { }
 
   ngOnInit() {
+    this.oAuth.fireBaseAuthStatus()
+        .subscribe(user => {
+          this.user = user;
+          console.log('User info at navbar', user);
+        });
   }
 
 }

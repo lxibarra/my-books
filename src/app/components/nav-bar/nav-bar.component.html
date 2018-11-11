@@ -3,4 +3,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- Include here all navigation links  -->
   </div>
+  <div class="pull-right">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" >
+    <div class="navbar-nav" *ngIf="!user; else currentUserTpl">
+      <a class="nav-item nav-link active" href="#">Register / Login<span class="sr-only">(current)</span></a>
+    </div>
+    <ng-template #currentUserTpl>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="{{user.photoURL}}" width="30" height="30" class="d-inline-block align-top rounded" alt="">
+          {{ user.displayName }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/profile">Profile</a>
+          <a class="dropdown-item" href="#">Log Out</a>
+       </div>
+      </li>
+    </ul>
+    </ng-template>
+  </div>
+  </div>
 </nav>
