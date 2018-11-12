@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
-  <a class="navbar-brand" routerLink="/">My Books</a>
+  <a class="navbar-brand" routerLink="/books" *ngIf="user; else homePage">My Books</a>
+  <ng-template #homePage>
+    <a class="navbar-brand" routerLink="/">My Books</a>
+  </ng-template>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- Include here all navigation links  -->
   </div>

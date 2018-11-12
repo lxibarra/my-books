@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser  } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { EventManager } from '@angular/platform-browser';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { GoogleBooksAPIService } from '../../Services/google-books-api.service';
 import { IBooksSearchResult, IBookSearchItem } from '../../interfaces/IGoogleBooks';
@@ -12,6 +13,8 @@ import { IBooksSearchResult, IBookSearchItem } from '../../interfaces/IGoogleBoo
   styleUrls: ['./book-search.component.scss']
 })
 export class BookSearchComponent implements OnInit {
+
+  @ViewChild('form') searchInput: ElementRef;
 
   searchForm = new FormGroup({
     criteria: new FormControl('')
@@ -25,8 +28,17 @@ export class BookSearchComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private googleBooksAPI: GoogleBooksAPIService
-  ) { }
+    private googleBooksAPI: GoogleBooksAPIService,
+    private eventManager: EventManager
+  ) {
+    this.eventManager.addGlobalEventListener('window', 'scroll', this.manageSearchStickyness.bind(this));
+  }
+
+  manageSearchStickyness() {
+    const rect = this.searchInput.nativeElement.getBoundingClientRect();
+    const visible = rect.bottom >= 0 && rect.left >= 0;
+    console.log('Visible', visible);
+  }
 
   onSelectBook(book) {
     this.selectBook.emit(book);

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { isPlatformBrowser  } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { User } from 'firebase/';
@@ -27,10 +28,12 @@ export class SignInComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private oAuth: FirebaseAuthService) { }
+    private oAuth: FirebaseAuthService,
+    private router: Router
+  ) { }
 
   handleSuccess(service, response) {
-    console.log('Handle Success');
+    this.router.navigateByUrl('/books');
   }
 
   handleError(service, error) {
