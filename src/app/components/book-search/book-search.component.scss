@@ -9,3 +9,15 @@
 .search-results-box {
   padding-top: 10px;
 }
+
+.sticky-search {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: aliceblue;
+  padding: 5px 0;
+  border-bottom: solid 5px #007bff;
+  transition: all 0.5s ease-in;
+}

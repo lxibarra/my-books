@@ -23,6 +23,8 @@ export class BookSearchComponent implements OnInit {
   searchBusy = false;
   searchResults: IBooksSearchResult = null;
 
+  searchIsVisible = false;
+
   @Output() selectBook = new EventEmitter<IBookSearchItem>();
   @Input() placeholder = 'Type to search for books';
 
@@ -36,8 +38,7 @@ export class BookSearchComponent implements OnInit {
 
   manageSearchStickyness() {
     const rect = this.searchInput.nativeElement.getBoundingClientRect();
-    const visible = rect.bottom >= 0 && rect.left >= 0;
-    console.log('Visible', visible);
+    this.searchIsVisible = !(rect.bottom >= 0 && rect.left >= 0);
   }
 
   onSelectBook(book) {

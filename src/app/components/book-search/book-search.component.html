@@ -1,6 +1,8 @@
 <form [formGroup]="searchForm" autocomplete="off" #form>
-  <div class="sticky-search">
-    <input formControlName="criteria" name="search" class="form-control form-control-lg" type="text" [placeholder]="placeholder">
+  <div [ngClass]="{ 'sticky-search': searchIsVisible }">
+    <div class="container" [ngClass]="{ 'container': searchIsVisible }">
+    <input formControlName="criteria" name="search" class="form-control" [ngClass]="{ 'form-control-lg': !searchIsVisible }" type="text" [placeholder]="placeholder">
+    </div>
   </div>
 </form>
 <div class="progress" [ngClass]="{ 'search-busy': searchBusy  }">
@@ -12,5 +14,7 @@
       (selectBook)="onSelectBook($event)"
       actionLabel="Add to my read list"
       totalLabel="Found: "
-      ></app-book-search-results>
+      >
+      
+    </app-book-search-results>
 </div>
