@@ -28,6 +28,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MyBooksCollectionComponent } from './pages/my-books-collection/my-books-collection.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BooksCollectionComponent } from './pages/books-collection/books-collection.component';
+import { BookDescriptionComponent } from './components/book-description/book-description.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { BooksCollectionComponent } from './pages/books-collection/books-collect
     SignInComponent,
     MyBooksCollectionComponent,
     ProfileComponent,
-    BooksCollectionComponent
+    BooksCollectionComponent,
+    BookDescriptionComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

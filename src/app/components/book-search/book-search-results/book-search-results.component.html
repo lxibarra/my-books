@@ -6,7 +6,13 @@
       </div>
     </div>
   </div>
-  <div class="row book-item" *ngFor="let item of _results.items">
+  <app-book-description
+    [actionLabel]="_actionLabel$ | async"
+    *ngFor="let item of _results.items"
+    [item]="item"
+    (selectBook)="onSelectBook($event)"
+  ></app-book-description>
+  <!--div class="row book-item" *ngFor="let item of _results.items">
     <div class="col-md-2 text-center" *ngIf="item.volumeInfo.imageLinks; else nothumbnail">
       <img src="{{ item.volumeInfo.imageLinks.thumbnail }}" alt="{{ item.volumeInfo.title }}" class="img-thumbnail">
     </div>
@@ -26,10 +32,9 @@
           <span class="category-label">Categories: </span>
           <span class="badge badge-pill badge-light" *ngFor="let category of item.volumeInfo.categories">{{ category }}</span>
       </div>
-      <!-- this should use transclusion to allow the parent component to control the actions bar -->
       <div class="actions">
         <button *ngIf="_actionLabel$ | async" class="btn btn-primary btn-sm" (click)="onSelectBook(item)" [innerHTML]="_actionLabel$ | async">Add to my read list</button>
       </div>
     </div>
-  </div>
+  </div-->
 </div>

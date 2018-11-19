@@ -1,0 +1,73 @@
+// move this mixin to a global scope so it can be used on all the app
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  &:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.book-item {
+  margin-bottom: 10px;
+  .title {
+    small {
+      font-size: 60%;
+      font-style: italic;
+    }
+  }
+
+  .no-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-style: italic;
+  }
+
+  .description {
+    text-align: justify;
+    display: block; /* or inline-block */
+
+  }
+
+  .cut-text {
+    @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);
+  }
+
+  .publisher {
+    font-weight: bold;
+    font-size: 60%;
+    small {
+      font-style: italic;
+    }
+  }
+
+  .categories {
+    display:inline-block;
+    .category-label {
+      font-size: 60%;
+    }
+  }
+
+  .actions {
+    display:inline-block;
+    float: right;
+  }
+
+}

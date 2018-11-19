@@ -11,11 +11,13 @@ export class AddBookComponent implements OnInit {
   constructor(private dbService: DatabaseService) { }
 
   onSelectBook(book) {
-    this.dbService.AddBook(book).then(result => {
+
+    console.log('BOOK at page Level', book);
+    /*this.dbService.AddBook(book).then(result => {
       console.log('success', result);
     }).catch(error => {
       console.log(error);
-    });
+    });*/
   }
 
   ngOnInit() {

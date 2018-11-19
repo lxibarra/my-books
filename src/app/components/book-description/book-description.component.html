@@ -1,0 +1,26 @@
+<div class="row book-item">
+  <div class="col-md-2 text-center" *ngIf="_item.volumeInfo.imageLinks; else nothumbnail">
+    <img src="{{ _item.volumeInfo.imageLinks.thumbnail }}" alt="{{ _item.volumeInfo.title }}" class="img-thumbnail">
+  </div>
+  <ng-template #nothumbnail>
+    <div class="col-md-2 no-image">
+      No Image Available
+    </div>
+  </ng-template>
+  <div class="col-md-10">
+    <h4 class="title">{{ _item.volumeInfo.title }} <small *ngIf="_item.volumeInfo.authors">by {{ (_item.volumeInfo.authors || []).join(', ') }}</small></h4>
+    <div class="publisher" *ngIf="_item.volumeInfo.publisher">Publisher: <small>{{_item.volumeInfo.publisher}}</small></div>
+    <p *ngIf="_item.searchInfo; else _itemDescription" class="description cut-text" [innerHTML]="_item.searchInfo.textSnippet"></p>
+    <ng-template #_itemDescription>
+        <p *ngIf="_item.volumeInfo.description" class="description cut-text" [innerHTML]="_item.volumeInfo.description"></p>
+    </ng-template>
+    <div class="categories" *ngIf="_item.volumeInfo.categories">
+        <span class="category-label">Categories: </span>
+        <span class="badge badge-pill badge-light" *ngFor="let category of _item.volumeInfo.categories">{{ category }}</span>
+    </div>
+    <!-- this should use transclusion to allow the parent component to control the actions bar -->
+    <div class="actions">
+      <button *ngIf="_actionButtonVisible" class="btn btn-primary btn-sm" (click)="onSelectBook(_item)" [innerHTML]="_actionLabel">Add to my read list</button>
+    </div>
+  </div>
+</div>
